@@ -15,8 +15,74 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Daylight.cpp">
+    <ClCompile Include="src\App.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\gameclient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameserver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Globals.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\timestepper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Game States\ClientMenuState.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game States\ClientTestingState.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game States\ServerMenuState.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game States\ServerTestingState.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game States\TemplateState.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\App.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameClient.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameServer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameStates.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Globals.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Timestepper.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="freetype.dll" />
+    <None Include="glew32.dll" />
+    <None Include="OpenAL32.dll" />
+    <None Include="SDL2.dll" />
+    <None Include="zlib1.dll" />
+    <None Include="src\Shaders\FancyFS.glsl" />
+    <None Include="src\Shaders\ImageFS.glsl" />
+    <None Include="src\Shaders\ImageVS.glsl" />
+    <None Include="src\Shaders\SolidColorFS.glsl" />
+    <None Include="src\Shaders\SolidColorVS.glsl" />
+    <None Include="src\Shaders\TextFS.glsl" />
+    <None Include="src\Shaders\TextVS.glsl" />
+    <None Include="src\Shaders\Win95BgFS.glsl" />
+    <None Include="src\Shaders\Win95BgVS.glsl" />
   </ItemGroup>
 </Project>

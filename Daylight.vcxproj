@@ -100,14 +100,17 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>..\DergFramework\include;C:\dev\glew-2.2.0\include;C:\dev\SDL2\include;..\DergFramework\include\util\ext;..\DergFramework\imgui;$(ProjectDir)src;$(ProjectDir)include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>SDLmain.dll</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -127,7 +130,46 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Daylight.cpp" />
+    <ClCompile Include="src\App.cpp" />
+    <ClCompile Include="src\gameclient.cpp" />
+    <ClCompile Include="src\gameserver.cpp" />
+    <ClCompile Include="src\Globals.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\timestepper.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DergFramework\DergFramework.vcxproj">
+      <Project>{12ec9d79-7bbc-464c-9a94-2f7abe83a53b}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\App.hpp" />
+    <ClInclude Include="include\Game States\ClientMenuState.hpp" />
+    <ClInclude Include="include\Game States\ClientTestingState.hpp" />
+    <ClInclude Include="include\Game States\ServerMenuState.hpp" />
+    <ClInclude Include="include\Game States\ServerTestingState.hpp" />
+    <ClInclude Include="include\Game States\TemplateState.hpp" />
+    <ClInclude Include="include\GameClient.hpp" />
+    <ClInclude Include="include\GameServer.hpp" />
+    <ClInclude Include="include\GameStates.hpp" />
+    <ClInclude Include="include\Globals.hpp" />
+    <ClInclude Include="include\Timestepper.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="freetype.dll" />
+    <None Include="glew32.dll" />
+    <None Include="OpenAL32.dll" />
+    <None Include="SDL2.dll" />
+    <None Include="src\Shaders\FancyFS.glsl" />
+    <None Include="src\Shaders\ImageFS.glsl" />
+    <None Include="src\Shaders\ImageVS.glsl" />
+    <None Include="src\Shaders\SolidColorFS.glsl" />
+    <None Include="src\Shaders\SolidColorVS.glsl" />
+    <None Include="src\Shaders\TextFS.glsl" />
+    <None Include="src\Shaders\TextVS.glsl" />
+    <None Include="src\Shaders\Win95BgFS.glsl" />
+    <None Include="src\Shaders\Win95BgVS.glsl" />
+    <None Include="zlib1.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Daylight", "Daylight.vcxproj", "{99E56F79-C64B-4E40-9378-41F4DD372379}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DergFramework", "..\DergFramework\DergFramework.vcxproj", "{12EC9D79-7BBC-464C-9A94-2F7ABE83A53B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{99E56F79-C64B-4E40-9378-41F4DD372379}.Release|x64.Build.0 = Release|x64
 		{99E56F79-C64B-4E40-9378-41F4DD372379}.Release|x86.ActiveCfg = Release|Win32
 		{99E56F79-C64B-4E40-9378-41F4DD372379}.Release|x86.Build.0 = Release|Win32
+		{12EC9D79-7BBC-464C-9A94-2F7ABE83A53B}.Debug|x64.ActiveCfg = Debug|x64
+		{12EC9D79-7BBC-464C-9A94-2F7ABE83A53B}.Debug|x64.Build.0 = Debug|x64
+		{12EC9D79-7BBC-464C-9A94-2F7ABE83A53B}.Debug|x86.ActiveCfg = Debug|Win32
+		{12EC9D79-7BBC-464C-9A94-2F7ABE83A53B}.Debug|x86.Build.0 = Debug|Win32
+		{12EC9D79-7BBC-464C-9A94-2F7ABE83A53B}.Release|x64.ActiveCfg = Release|x64
+		{12EC9D79-7BBC-464C-9A94-2F7ABE83A53B}.Release|x64.Build.0 = Release|x64
+		{12EC9D79-7BBC-464C-9A94-2F7ABE83A53B}.Release|x86.ActiveCfg = Release|Win32
+		{12EC9D79-7BBC-464C-9A94-2F7ABE83A53B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
