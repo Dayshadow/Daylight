@@ -145,7 +145,6 @@ public:
 			if (s.ID == p_ID) return &s;
 		}
 		throw std::exception("State not found.");
-		return nullptr;
 	};
 
 	bool stateExists(GameStateEnum p_ID) {

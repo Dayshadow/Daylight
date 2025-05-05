@@ -104,13 +104,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\DergFramework\include;C:\dev\glew-2.2.0\include;C:\dev\SDL2\include;..\DergFramework\include\util\ext;..\DergFramework\imgui;$(ProjectDir)src;$(ProjectDir)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\DergFramework\include;C:\dev\glew-2.2.0\include;C:\dev\SDL2\include;C:\dev\boost_1_82_0\;..\DergFramework\include\util\ext;..\DergFramework\imgui;$(ProjectDir)src;$(ProjectDir)include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>SDLmain.dll</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -121,6 +122,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>..\DergFramework\include;C:\dev\glew-2.2.0\include;C:\dev\SDL2\include;C:\dev\boost_1_82_0\;..\DergFramework\include\util\ext;..\DergFramework\imgui;$(ProjectDir)src;$(ProjectDir)include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -130,9 +133,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\crypt.cpp" />
     <ClCompile Include="src\App.cpp" />
-    <ClCompile Include="src\gameclient.cpp" />
-    <ClCompile Include="src\gameserver.cpp" />
+    <ClCompile Include="src\client.cpp" />
+    <ClCompile Include="src\server.cpp" />
     <ClCompile Include="src\Globals.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\timestepper.cpp" />
@@ -144,13 +148,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\App.hpp" />
+    <ClInclude Include="include\Crypt.hpp" />
     <ClInclude Include="include\Game States\ClientMenuState.hpp" />
     <ClInclude Include="include\Game States\ClientTestingState.hpp" />
     <ClInclude Include="include\Game States\ServerMenuState.hpp" />
     <ClInclude Include="include\Game States\ServerTestingState.hpp" />
     <ClInclude Include="include\Game States\TemplateState.hpp" />
-    <ClInclude Include="include\GameClient.hpp" />
-    <ClInclude Include="include\GameServer.hpp" />
+    <ClInclude Include="include\Client.hpp" />
+    <ClInclude Include="include\Primes.hpp" />
+    <ClInclude Include="include\Server.hpp" />
     <ClInclude Include="include\GameStates.hpp" />
     <ClInclude Include="include\Globals.hpp" />
     <ClInclude Include="include\Timestepper.hpp" />

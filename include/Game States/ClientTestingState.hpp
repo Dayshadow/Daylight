@@ -3,6 +3,10 @@
 #include "Framework/Graphics/Sprite.hpp"
 #include "Framework/Graphics/GenericShaders.hpp"
 #include "Framework/Window/GameWindow.hpp"
+#include "Framework/Graphics/GUI_Experimental/GUIContainer.hpp"
+#include "Framework/Graphics/GUI_Experimental/GUIDragBar.hpp"
+
+#include <Crypt.hpp>
 
 class ClientTestingState : public GameState {
 public:
@@ -10,18 +14,32 @@ public:
 	ClientTestingState(GameWindow& window) : m_window(window) {};
 
 	GenericShaders& gs = GenericShaders::Get();
+	GUI& GlobalGUI = GUI::Get();
 
-	// 0.5x0.5 square centered at 0, 0
-	Sprite sillySprite{ glm::vec3(0.f), Rect(-0.25f, -0.25f, 0.5f, 0.5f) };
 	// floating 32 z units above the x-y plane
 	Camera testCam{ {0.f, 0.f, 32.f} };
+
+	GUIDragBar testBoxDrag{ "bar1" };
+	GUIContainer testBox{ "box1" };
+
 
 	void init() override {
 		LOG("Client state test started!");
 		// look at origin
 		testCam.lookAt({ 0.f, 0.f, 0.f });
-		// add basic shader to sprite
-		sillySprite.attachShader(&gs.solidColorShader);
+
+		testBox.setAbsoluteBounds(Rect(0.25f, 0.25f, 0.5f, 0.5f));
+		testBox.enableBackground();
+		testBox.backgroundColor = glm::vec3(0.4f, 0.1f, 0.05f);
+		testBox.backgroundOpacity = 1.f;
+
+		testBoxDrag.setLocalBounds(Rect(0.f, 0.f, 1.f, 0.1f));
+		testBoxDrag.backgroundColor = glm::vec3(1.f);
+		testBoxDrag.enableBackground();
+		testBox.addChild(&testBoxDrag);
+		
+		GlobalGUI.addElement(&testBox);
+
 	};
 
 	void update() override {
@@ -35,22 +53,24 @@ public:
 		// adjust camera to window aspect
 		testCam.setDimensions(m_window.width, m_window.height);
 
-		// set sprite color and opacity
-		gs.solidColorShader.setVec3Uniform(gs.solidColor_colorUniformLoc, { 0.8f, 0.85f, 1.0f });
-		gs.solidColorShader.setFloatUniform(gs.solidColor_opacityUniformLoc, 0.9f);
+		bool isP = Crypt::isProbablyPrime<uint32_t>(394696903, 8);
 
-		// self explanitory
-		sillySprite.setRotation((float)frame / 60);
+		auto p1 = Crypt::generateRSAPrime<boost::multiprecision::uint1024_t>();
+		auto p2 = Crypt::generateRSAPrime<boost::multiprecision::uint1024_t>();
+
+
+		//LOG(Crypt::generateKey512());
 
 		DrawStates d;
 		// apply camera transform
 		d.setTransform(testCam.getTransform());
-
-		sillySprite.draw(m_window, d);
 	};
 	void suspend() override {};
 	void resume() override {};
-	void close() override {};
+	void close() override {
+		// recursive
+		GlobalGUI.removeElement("box1");
+	};
 
 private:
 	GameWindow& m_window;

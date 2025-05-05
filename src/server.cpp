@@ -1,7 +1,7 @@
-#include "GameServer.hpp"
+#include "Server.hpp"
 
 // This is mostly just boilerplate from my basic engine, it may not be needed
-GameServer::GameServer()
+Server::Server()
 {
 	stateManager.bindServerState(GameStateEnum::NO_STATE, (GameState*)&State_None);
 	stateManager.bindServerState(GameStateEnum::MENU, (GameState*)&State_Menu);
@@ -9,15 +9,15 @@ GameServer::GameServer()
 	stateManager.setStateByForce(GameStateEnum::TESTING);
 }
 
-void GameServer::start(SharedQueue<std::exception_ptr>& p_exceptionQueue) {
-	serverThread = std::thread(&GameServer::run, this, std::ref(p_exceptionQueue));
+void Server::start(SharedQueue<std::exception_ptr>& p_exceptionQueue) {
+	serverThread = std::thread(&Server::run, this, std::ref(p_exceptionQueue));
 }
 
-void GameServer::stop() {
+void Server::stop() {
 	serverStopping = true;
 	serverThread.join();
 }
-void GameServer::run(SharedQueue<std::exception_ptr>& p_exceptionQueue) {
+void Server::run(SharedQueue<std::exception_ptr>& p_exceptionQueue) {
 
 	Observer<MouseEvent> mouseObserver{ Globals::mouseSubject };
 

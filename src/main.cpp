@@ -3,9 +3,11 @@
 #include "SDL.h"
 #include "Framework/Log.hpp"
 #include "App.hpp"
-// BEGIN EPIC SPAGHETTI CODE
+
 #define STB_IMAGE_IMPLEMENTATION 
 
+// ENTRYPOINT, most of this is just for establishing a main loop, client, and server threads. This project only really uses the client thread.
+// This code adapts from a game framework I made previously
 int main(int argc, char* argv[]) {
 
 #ifdef _DEBUG
@@ -15,13 +17,10 @@ int main(int argc, char* argv[]) {
 	_CrtSetDbgFlag(flag);
 #endif
 
-	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK);
+	SDL_Init(SDL_INIT_VIDEO);
 
 	App app;
 	app.run();
 
-	LOG("hello from the application");
-
 	return 0;
 }
-// END EPIC SPAGHETTI CODE

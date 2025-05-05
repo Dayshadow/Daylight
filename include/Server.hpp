@@ -11,7 +11,7 @@
 #include "Timestepper.hpp"
 #include "Globals.hpp"
 
-class GameServer
+class Server
 {
 	void run(SharedQueue<std::exception_ptr>& p_exceptionQueue);
 
@@ -28,7 +28,7 @@ class GameServer
 
 public:
 	GameStateManager& stateManager = GameStateManager::Get();
-	GameServer();
+	Server();
 	void start(SharedQueue<std::exception_ptr>& p_exceptionQueue);
 	void stop();
 	std::atomic_bool serverStopping = false;

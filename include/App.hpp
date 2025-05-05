@@ -1,12 +1,12 @@
 #pragma once
-#include "GameClient.hpp"
-#include "GameServer.hpp"
+#include "Client.hpp"
+#include "Server.hpp"
 #include "imgui.h"
 #include "imgui_impl_sdl2.h"
 class App {
 
-	GameClient client;
-	GameServer localServer;
+	Client client;
+	Server localServer;
 
 	SharedQueue<std::exception_ptr> m_exceptionQueue;
 

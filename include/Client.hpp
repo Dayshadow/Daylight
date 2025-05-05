@@ -11,7 +11,7 @@
 #include "Globals.hpp"
 #include "util/SharedQueue.hpp"
 
-class GameClient
+class Client
 {
 	void run(SharedQueue<std::exception_ptr>& p_exceptionQueue);
 	void resizeWindow(uint32_t p_w, uint32_t p_h);
@@ -34,8 +34,8 @@ private:
 	   void cleanUp();
 
 public:
-	GameClient();
-	~GameClient();
+	Client();
+	~Client();
 	void start(SharedQueue<std::exception_ptr>& p_exceptionQueue);
 	void stop();
 	uint32_t getWindowID() { return window.getWindowID(); }

@@ -15,7 +15,7 @@ struct Timestepper {
 	
 
 	float accumulator;
-	int gameUpdateFPS;
+	int updateFPS;
 	float frameTime;
 	float alpha;
 	fpsGauge fg;

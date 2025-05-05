@@ -1,11 +1,11 @@
-#include "GameClient.hpp"
+#include "Client.hpp"
 #include "Framework/Graphics/Sprite.hpp"
 #include "Framework/Graphics/GenericShaders.hpp"
 #include "Framework/Audio/wav.hpp"
 #include "Framework/Audio/AudioImmediate.hpp"
 #include "Framework/Graphics/GUI_Experimental/GUIDragBar.hpp"
 #include "Framework/Graphics/GUI_Experimental/GUIContainer.hpp"
-GameClient::GameClient() {
+Client::Client() {
 	stateManager.bindClientState(GameStateEnum::NO_STATE, (GameState*)&State_None);
 	stateManager.bindClientState(GameStateEnum::MENU, (GameState*)&State_Menu);
 	stateManager.bindClientState(GameStateEnum::TESTING, (GameState*)&State_Testing);
@@ -13,24 +13,24 @@ GameClient::GameClient() {
 	window.setVSync(true);
 	imctx = ImGui::CreateContext();
 }
-GameClient::~GameClient() {
+Client::~Client() {
 	window.cleanUp();
 }
 
-void GameClient::start(SharedQueue<std::exception_ptr>& p_exceptionQueue) {
+void Client::start(SharedQueue<std::exception_ptr>& p_exceptionQueue) {
 	// important
 	window.unbindFromThisThread();
-	clientThread = std::thread(&GameClient::run, this, std::ref(p_exceptionQueue));
+	clientThread = std::thread(&Client::run, this, std::ref(p_exceptionQueue));
 }
 
-void GameClient::stop() {
+void Client::stop() {
 	clientStopping = true;
 	clientThread.join();
 }
 
 void audioInit();
 
-void GameClient::run(SharedQueue<std::exception_ptr>& p_exceptionQueue) {
+void Client::run(SharedQueue<std::exception_ptr>& p_exceptionQueue) {
 	SharedQueue<MouseEvent>& s_mouseQueue = SharedQueue<MouseEvent>::Get(); // one-way messenger for capturing mouse events
 	SharedQueue<KeyEvent>& s_keyQueue = SharedQueue<KeyEvent>::Get(); // one-way messenger for capturing mouse events
 	SharedQueue<SDL_Event>& s_SDLEventMessenger = SharedQueue<SDL_Event>::Get();
@@ -64,9 +64,6 @@ void GameClient::run(SharedQueue<std::exception_ptr>& p_exceptionQueue) {
 	audioInit();
 
 	try {
-
-		auto& gs = GenericShaders::Get();
-
 		while (true) {
 
 			if (window.hasChangedFullscreenState()) {
@@ -88,8 +85,6 @@ void GameClient::run(SharedQueue<std::exception_ptr>& p_exceptionQueue) {
 			renderFPSGauge.update(0.99f);
 
 			static GUIEvent e; // static so it keeps mouse pos between updates
-
-			ImGuiIO& io = ImGui::GetIO(); (void)io;
 			e.key.valid = false;
 			while (auto opt = s_keyQueue.tryPop()) {
 				if (io.WantCaptureKeyboard) {
@@ -148,7 +143,7 @@ void GameClient::run(SharedQueue<std::exception_ptr>& p_exceptionQueue) {
 }
 
 
-void GameClient::cleanUp()
+void Client::cleanUp()
 {
 	alcMakeContextCurrent(NULL);
 	alcDestroyContext(Globals::alctx);
@@ -157,7 +152,7 @@ void GameClient::cleanUp()
 	ImGui::DestroyContext(imctx);
 }
 
-void GameClient::resizeWindow(uint32_t p_w, uint32_t p_h)
+void Client::resizeWindow(uint32_t p_w, uint32_t p_h)
 {
 	window.width = p_w;
 	window.height = p_h;
