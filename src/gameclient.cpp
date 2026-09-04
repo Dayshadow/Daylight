@@ -54,11 +54,10 @@ void GameClient::imgui_init() const
     ImGui_ImplOpenGL3_Init(glsl_version);
 }
 
-void GameClient::imgui_update()
+void GameClient::imgui_start_frame()
 {
     SharedQueue<SDL_Event>& s_SDLEventMessenger = SharedQueue<SDL_Event>::Get();
     GameStateManager& gsm = GameStateManager::Get();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
 
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame();
@@ -68,10 +67,38 @@ void GameClient::imgui_update()
         ImGui_ImplSDL2_ProcessEvent(&e.value());
     }
 
-    if (m_settings.frameratePtr)
-        *m_settings.frameratePtr = 1.f / renderFPSGauge.getFrametimeAverage();
-    m_window.clear();
-    stateManager.client_update();
+    ImGui::Begin("Game States");
+    const char* state_names[] = {
+        "Testing State",
+        "Menu State",
+        "Game State"
+    };
+    constexpr GameStateEnum enums[] = {
+        GameStateEnum::TESTING,
+        GameStateEnum::MENU,
+        GameStateEnum::GAME
+    };
+    static int selected_idx = 0;
+    if (ImGui::BeginListBox("Selected Game State")) {
+        for (int i = 0; i < sizeof(state_names) / sizeof(const char*); i++) {
+            const bool selected = selected_idx == i;
+            if (ImGui::Selectable(state_names[i], selected)) {
+                selected_idx = i;
+                gsm.swap(enums[i]);
+            }
+            if (selected)
+                ImGui::SetItemDefaultFocus();
+        }
+        ImGui::EndListBox();
+    }
+
+
+    ImGui::End();
+}
+
+void GameClient::imgui_end_frame()
+{
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
     glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
     ImGui::Render();
 
@@ -189,7 +216,15 @@ void GameClient::run(SharedQueue<std::exception_ptr>& p_exceptionQueue, const Cl
 
             renderFPSGauge.update(0.99f);
 
-            imgui_update();
+            imgui_start_frame();
+
+            if (m_settings.frameratePtr)
+                *m_settings.frameratePtr = 1.f / renderFPSGauge.getFrametimeAverage();
+
+            m_window.clear();
+            stateManager.client_update();
+
+            imgui_end_frame();
 
             // static so it keeps mouse pos between updates
             static GUIEvent gui_e; 

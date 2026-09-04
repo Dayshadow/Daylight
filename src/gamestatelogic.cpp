@@ -2,15 +2,15 @@
 
 void GameStatePair::close()
 {
-    if (std::shared_ptr<GameState> lkServer = server.lock()) {
-        lkServer->close();
-        lkServer->initialized = false;
-        LOG("A Server State is Closing");
-    }
     if (std::shared_ptr<GameState> lkClient = client.lock()) {
         lkClient->close();
         lkClient->initialized = false;
         LOG("A Client State is Closing");
+    }
+    if (std::shared_ptr<GameState> lkServer = server.lock()) {
+        lkServer->close();
+        lkServer->initialized = false;
+        LOG("A Server State is Closing");
     }
 }
 
@@ -108,6 +108,7 @@ void GameStateManager::set_state_by_force(GameStateEnum p_ID)
 
 void GameStateManager::swap(GameStateEnum newState)
 {
+
     if (m_activeState.expired()) {
         throw std::exception("Tried to swap game states when an initial state has not been set.");
     };

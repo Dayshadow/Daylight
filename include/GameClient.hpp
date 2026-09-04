@@ -47,7 +47,8 @@ public:
     GameClient();
     ~GameClient();
     void imgui_init() const;
-    void imgui_update();
+    void imgui_start_frame();
+    void imgui_end_frame();
     void start(SharedQueue<std::exception_ptr>& p_exceptionQueue, const ClientStartupState& p_params);
     void stop();
     bool joinable();
