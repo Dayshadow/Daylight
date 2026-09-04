@@ -40,7 +40,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -105,7 +105,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\DergFramework\include;C:\dev\glew-2.2.0\include;C:\dev\SDL2\include;C:\dev\boost_1_82_0\;..\DergFramework\include\util\ext;..\DergFramework\imgui;$(ProjectDir)src;$(ProjectDir)include</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp23</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -123,7 +123,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\DergFramework\include;C:\dev\glew-2.2.0\include;C:\dev\SDL2\include;C:\dev\boost_1_82_0\;..\DergFramework\include\util\ext;..\DergFramework\imgui;$(ProjectDir)src;$(ProjectDir)include</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp23</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,32 +133,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\crypt.cpp" />
-    <ClCompile Include="src\App.cpp" />
-    <ClCompile Include="src\client.cpp" />
-    <ClCompile Include="src\server.cpp" />
-    <ClCompile Include="src\Globals.cpp" />
-    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\daylightglobals.cpp" />
+    <ClCompile Include="src\gameclient.cpp" />
+    <ClCompile Include="src\gameserver.cpp" />
+    <ClCompile Include="src\gameshaders.cpp" />
+    <ClCompile Include="src\gamestatelogic.cpp" />
     <ClCompile Include="src\timestepper.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DergFramework\DergFramework.vcxproj">
-      <Project>{12ec9d79-7bbc-464c-9a94-2f7abe83a53b}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\App.hpp" />
-    <ClInclude Include="include\Crypt.hpp" />
+    <ClInclude Include="include\DaylightGlobals.hpp" />
+    <ClInclude Include="include\BridgeObject.hpp" />
     <ClInclude Include="include\Game States\ClientMenuState.hpp" />
     <ClInclude Include="include\Game States\ClientTestingState.hpp" />
     <ClInclude Include="include\Game States\ServerMenuState.hpp" />
     <ClInclude Include="include\Game States\ServerTestingState.hpp" />
     <ClInclude Include="include\Game States\TemplateState.hpp" />
     <ClInclude Include="include\Client.hpp" />
-    <ClInclude Include="include\Primes.hpp" />
-    <ClInclude Include="include\Server.hpp" />
-    <ClInclude Include="include\GameStates.hpp" />
-    <ClInclude Include="include\Globals.hpp" />
+    <ClInclude Include="include\GameClient.hpp" />
+    <ClInclude Include="include\GameServer.hpp" />
+    <ClInclude Include="include\GameShaders.hpp" />
+    <ClInclude Include="include\GameStateLogic.hpp" />
+    <ClInclude Include="include\SharedData.hpp" />
     <ClInclude Include="include\Timestepper.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +171,11 @@
     <None Include="src\Shaders\Win95BgFS.glsl" />
     <None Include="src\Shaders\Win95BgVS.glsl" />
     <None Include="zlib1.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Delta\DeltaCompound\DergFramework\DergFramework.vcxproj">
+      <Project>{12ec9d79-7bbc-464c-9a94-2f7abe83a53b}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
