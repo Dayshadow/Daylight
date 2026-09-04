@@ -2,14 +2,14 @@
 
 void GameStatePair::close()
 {
-    if (!server.expired()) {
-        server.lock()->close();
-        server.lock()->initialized = false;
+    if (std::shared_ptr<GameState> lkServer = server.lock()) {
+        lkServer->close();
+        lkServer->initialized = false;
         LOG("A Server State is Closing");
     }
-    if (!client.expired()) {
-        client.lock()->close();
-        client.lock()->initialized = false;
+    if (std::shared_ptr<GameState> lkClient = client.lock()) {
+        lkClient->close();
+        lkClient->initialized = false;
         LOG("A Client State is Closing");
     }
 }
@@ -31,14 +31,16 @@ void GameStateManager::client_update()
 
     if (!activeState->ready()) return;
     // if the client is not running, and the server is, start the client
-    if (!activeState->client.lock()->initialized) {
-        if (activeState->server.lock()->initialized) {
-            activeState->client.lock()->init();
-            activeState->client.lock()->initialized = true;
-        }
-        return;
-    };
-    activeState->client.lock()->update();
+    if (std::shared_ptr<GameState> clientState = activeState->client.lock()) {
+        if (!clientState->initialized) {
+            if (activeState->server.lock()->initialized) {
+                clientState->init();
+                clientState->initialized = true;
+            }
+            return;
+        };
+        clientState->update();
+    }
 }
 
 void GameStateManager::server_update()
@@ -49,16 +51,19 @@ void GameStateManager::server_update()
     if (m_activeState.expired())
         return;
 
-    std::shared_ptr<GameStatePair> activeState = m_activeState.lock();
-
-    // if the server is not running, start it
-    if (!activeState->server.lock()->initialized) {
-        activeState->server.lock()->init();
-        activeState->server.lock()->initialized = true;
-        return;
+    if (std::shared_ptr<GameStatePair> activeState = m_activeState.lock()) {
+        // if the server is not running, start it
+        if (std::shared_ptr<GameState> serverState = activeState->server.lock()) {
+            if (!serverState->initialized) {
+                serverState->init();
+                serverState->initialized = true;
+                return;
+            }
+            if (!activeState->ready()) return;
+            serverState->update();
+        }
     }
-    if (!activeState->ready()) return;
-    activeState->server.lock()->update();
+
 }
 
 void GameStateManager::bind_client_state(GameStateEnum p_ID, std::weak_ptr<GameState> p_clientState)
@@ -133,12 +138,13 @@ bool GameStateManager::client_should_close()
 {
     std::unique_lock<std::shared_mutex> lock(m_stateLock);
     
-    std::shared_ptr<GameStatePair> activeState = m_activeState.lock();
-    if (activeState->client.expired()) return false;
-    if (m_stateStopping) {
-        activeState->client.lock()->close();
-        activeState->client.reset();
-        return true;
+    if (std::shared_ptr<GameStatePair> activeState = m_activeState.lock()) {
+        if (activeState->client.expired()) return false;
+        if (m_stateStopping) {
+            activeState->client.lock()->close();
+            activeState->client.reset();
+            return true;
+        }
     }
     return false;
 }
@@ -146,13 +152,13 @@ bool GameStateManager::client_should_close()
 bool GameStateManager::server_should_close()
 {
     std::unique_lock<std::shared_mutex> lock(m_stateLock);
-    std::shared_ptr<GameStatePair> activeState = m_activeState.lock();
-
-    if (activeState->server.expired()) return false;
-    if (m_stateStopping && activeState->client.expired()) {
-        activeState->server.lock()->close();
-        activeState->server.reset();
-        return true;
+    if (std::shared_ptr<GameStatePair> activeState = m_activeState.lock()) {
+        if (activeState->server.expired()) return false;
+        if (m_stateStopping && activeState->client.expired()) {
+            activeState->server.lock()->close();
+            activeState->server.reset();
+            return true;
+        }
     }
     return false;
 }
