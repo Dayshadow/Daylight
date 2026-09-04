@@ -84,14 +84,13 @@ void GameClient::imgui_start_frame()
             const bool selected = selected_idx == i;
             if (ImGui::Selectable(state_names[i], selected)) {
                 selected_idx = i;
-                gsm.swap(enums[i]);
+                GameStateManager::Get().swap(enums[i]);
             }
             if (selected)
                 ImGui::SetItemDefaultFocus();
         }
         ImGui::EndListBox();
     }
-
 
     ImGui::End();
 }
