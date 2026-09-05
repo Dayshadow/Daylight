@@ -136,7 +136,6 @@
     <ClCompile Include="src\daylightglobals.cpp" />
     <ClCompile Include="src\gameclient.cpp" />
     <ClCompile Include="src\gameserver.cpp" />
-    <ClCompile Include="src\gameshaders.cpp" />
     <ClCompile Include="src\gamestatelogic.cpp" />
     <ClCompile Include="src\timestepper.cpp" />
   </ItemGroup>
@@ -151,7 +150,6 @@
     <ClInclude Include="include\Client.hpp" />
     <ClInclude Include="include\GameClient.hpp" />
     <ClInclude Include="include\GameServer.hpp" />
-    <ClInclude Include="include\GameShaders.hpp" />
     <ClInclude Include="include\GameStateLogic.hpp" />
     <ClInclude Include="include\SharedData.hpp" />
     <ClInclude Include="include\Timestepper.hpp" />
