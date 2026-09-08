@@ -7,6 +7,15 @@ concept HasSharedClass = requires {
     typename T::Shared;
 };
 
+template <HasSharedClass T>
+struct SharedBase {
+    virtual void post_init();
+};
+
+template <HasSharedClass T>
+inline void SharedBase<T>::post_init()
+{
+}
 
 template <HasSharedClass T>
 struct SharedData {

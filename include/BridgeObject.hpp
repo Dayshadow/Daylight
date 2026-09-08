@@ -13,6 +13,7 @@ concept BridgeType = requires {
     // inherit from SharedData to get access to the shared_ptr in client and server.
     requires std::is_base_of<SharedData<T>, typename T::Client>::value;
     requires std::is_base_of<SharedData<T>, typename T::Server>::value;
+    requires std::is_base_of<SharedBase<T>, typename T::Shared>::value;
 };
 
 // This represents any object that must exist on both the client and the server, used for sync.
@@ -59,6 +60,7 @@ inline BridgeObject<T>::BridgeObject()
 {
     m_UUID = ++s_counter; // may not be atomic, but probably is
     m_shared = std::make_shared<typename T::Shared>();
+    m_shared->post_init();
 }
 
 // this destroy is dirty, the objects MUST not be in-use when it occurs. 
